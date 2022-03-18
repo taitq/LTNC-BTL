@@ -5,37 +5,26 @@
 #ifndef MAIN_CPP_PRIMARYOBJECT_H
 #define MAIN_CPP_PRIMARYOBJECT_H
 
-#include <bits/stdc++.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-
-const int WIDTH_WINDOW = 1000;
-const int HEIGHT_WINDOW = 600;
-const std::string TTILE_WINDOW = "GAME";
-static SDL_Window* window;
-static SDL_Renderer* renderer;
+#include "BaseFunction.h"
 
 class PrimaryObject {
-    private:
-        std::string ImageSource;
-        std::string AudioSource;
-        SDL_Rect drect;
+    protected:
+    std::string imageSource;
+    std::string audioSource;
+    int hoanhDo;
+    int tungDo;
     public:
         void setImageSource(std::string nameSource)
         {
-            ImageSource =nameSource;
+            imageSource =nameSource;
         }
         void setAudioSource(std:: string nameSource)
         {
-            AudioSource = nameSource;
+            audioSource = nameSource;
         }
-        void setDrect(SDL_Rect rect)
-        {
-            drect = rect;
-        }
-        SDL_Texture* loadImage();
-        void showObject();
+        void setDrect(int _hoanhDo, int _tungDo);
+        virtual void showObject() = 0;
+        virtual void playAudio();
 };
 
 
