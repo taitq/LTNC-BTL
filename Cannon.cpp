@@ -7,13 +7,13 @@
 void Cannon::move()
 {
     SDL_Event event;
-    bool check= true;
-    while(check)
+    bool quit = false;
+    while(!quit)
     {
         SDL_PollEvent(&event);
         switch (event.type) {
             case SDL_QUIT:
-                check = false;
+                quit = true;
                 break;
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {

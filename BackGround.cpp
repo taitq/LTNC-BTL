@@ -8,4 +8,5 @@ void BackGround::showObject() {
     SDL_Texture* texture = loadImage(imageSource);
     SDL_RenderCopy(renderer,texture,NULL,NULL);
     SDL_RenderPresent(renderer);
+
 }

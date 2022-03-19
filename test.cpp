@@ -5,11 +5,12 @@
 #include "BackGround.h"
 #include "BaseFunction.h"
 #include "Cannon.h"
-
+#include "Lobby.h"
 
 int main(int argc, char* argv[])
 {
     initWindow();
+    LobbyChooseOption();
     BackGround war;
     war.setImageSource("ImageSource/backGround.jpg");
     war.setAudioSource("AudioSource/backGroundSound.mp3");
