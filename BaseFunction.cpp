@@ -34,7 +34,7 @@ void SDL_BaseFunction::playAudio(const std::string& audioSource,int n)
         Mix_PlayChannel(-1,chunk,n);
 }
 
-void SDL_BaseFunction::loadText(SDL_Renderer *renderer, std::string text, SDL_Rect rect, SDL_Color color)
+SDL_Texture* SDL_BaseFunction::loadText(SDL_Renderer *renderer, std::string text, SDL_Rect rect, SDL_Color color)
 {
     TTF_Font* font = nullptr;
     font = TTF_OpenFont("FontSource/VeraMoBd.ttf", 20);
@@ -43,5 +43,5 @@ void SDL_BaseFunction::loadText(SDL_Renderer *renderer, std::string text, SDL_Re
     SDL_Surface * surface = TTF_RenderText_Solid(font,text.c_str(),color);
     SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer,surface);
     SDL_FreeSurface(surface);
-    SDL_RenderCopy(renderer,texture,NULL,&rect);
+    return  texture;
 }

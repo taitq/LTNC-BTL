@@ -21,31 +21,42 @@ vector<SDL_Rect> setRectOption()
     }
     return option;
 }
-void loadIntroBackGround(SDL_Renderer* renderer,BaseObject &backGroundIntro)
+void loadIntro(SDL_Renderer* renderer,BaseObject &backGroundIntro,  vector<SDL_Texture*> &text)
 {
+    std::vector<SDL_Rect > option (NUMBER_OPTION);
+    option = setRectOption();
     backGroundIntro.loadObject("ImageSource/lobby.jpg",renderer);
     backGroundIntro.rect.w = WIDTH;
     backGroundIntro.rect.h = HEIGHT;
-}
+    text[0] = SDL_BaseFunction::loadText(renderer,"PLAY ",option[0],RED);
+    text[1] = SDL_BaseFunction::loadText(renderer,"HISTORY " ,option[1], RED );
+    text[2] = SDL_BaseFunction::loadText(renderer, "EXIT ", option[2],RED);
 
-void showIntro(SDL_Renderer* renderer,BaseObject backGroundIntro)
+}
+void showIntro(SDL_Renderer* renderer,BaseObject backGroundIntro, const vector<SDL_Texture*> &text)
 {
-    backGroundIntro.showObject(renderer);
     std::vector<SDL_Rect > option (NUMBER_OPTION);
     option = setRectOption();
+    backGroundIntro.showObject(renderer);
     SDL_SetRenderDrawColor(renderer,0,0,0,255);
-    for(int i = 0; i < NUMBER_OPTION; i++)
-        SDL_RenderDrawRect(renderer,&option[i]);
-    SDL_BaseFunction::loadText(renderer,"PLAY ",option[0],RED);
-    SDL_BaseFunction::loadText(renderer,"HISTORY " ,option[1], RED );
-    SDL_BaseFunction::loadText(renderer, "EXIT ", option[2],RED);
+    for(int i = 0; i < NUMBER_OPTION;i++ )
+        SDL_RenderCopy(renderer,text[i],NULL,&option[i]);
 }
-
-int chooseOption(SDL_Renderer* renderer, BaseObject &backGroundIntro)
+void showChoice(SDL_Renderer* renderer,BaseObject backGroundIntro, const vector<SDL_Texture*> &text,int k)
 {
-    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",0);
-    showIntro(renderer,backGroundIntro);
+    std::vector<SDL_Rect > option (NUMBER_OPTION);
+    option = setRectOption();
+    backGroundIntro.showObject(renderer);
+    SDL_SetRenderDrawColor(renderer, 125, 125, 125, 255);
+    SDL_RenderFillRect(renderer, &option[k]);
+    for(int i = 0; i < NUMBER_OPTION;i++ )
+        SDL_RenderCopy(renderer,text[i],NULL,&option[i]);
+}
+int chooseOption(SDL_Renderer* renderer, BaseObject &backGroundIntro, const vector<SDL_Texture*> &text)
+{
+    showIntro(renderer,backGroundIntro,text);
     SDL_RenderPresent(renderer);
+    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",0);
     SDL_Point mouse;
     SDL_Event event;
     std::vector<SDL_Rect > option (NUMBER_OPTION);
@@ -58,21 +69,23 @@ int chooseOption(SDL_Renderer* renderer, BaseObject &backGroundIntro)
             case SDL_MOUSEMOTION:
                 mouse.x = event.motion.x;
                 mouse.y = event.motion.y;
-                for(int i = 0; i < NUMBER_OPTION;i++)
-                {
-                    if(SDL_PointInRect(&mouse,&option[i])) {
-                        showIntro(renderer, backGroundIntro);
-                        SDL_SetRenderDrawColor(renderer, 125, 125, 125, 255);
-                        SDL_RenderFillRect(renderer, &option[i]);
-                        SDL_SetRenderDrawColor(renderer,0,0,255,255);
-                        SDL_RenderDrawRect(renderer,&option[i]);
-                        SDL_BaseFunction::loadText(renderer,"PLAY ",option[0],RED);
-                        SDL_BaseFunction::loadText(renderer,"HISTORY " ,option[1], RED );
-                        SDL_BaseFunction::loadText(renderer, "EXIT ", option[2],RED);
-                        SDL_RenderPresent(renderer);
-                    }
-
+                if(SDL_PointInRect(&mouse,&option[0])) {
+                    showChoice(renderer, backGroundIntro, text, 0);
+                    SDL_RenderPresent(renderer);
                 }
+                else if (SDL_PointInRect(&mouse,&option[1])) {
+                    showChoice(renderer, backGroundIntro, text, 1);
+                    SDL_RenderPresent(renderer);
+                }
+                else if (SDL_PointInRect(&mouse,&option[2])) {
+                    showChoice(renderer, backGroundIntro, text, 2);
+                    SDL_RenderPresent(renderer);
+                }
+                else {
+                    showIntro(renderer, backGroundIntro, text);
+                    SDL_RenderPresent(renderer);
+                }
+
                 break;
 
             case SDL_MOUSEBUTTONDOWN:
@@ -87,5 +100,4 @@ int chooseOption(SDL_Renderer* renderer, BaseObject &backGroundIntro)
         }
 
     }
-    SDL_RenderClear(renderer);
 }

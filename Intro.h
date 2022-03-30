@@ -11,12 +11,11 @@ using namespace std;
 extern const int NUMBER_OPTION ;
 
 vector<SDL_Rect> setRectOption();
-void loadIntroBackGround(SDL_Renderer* renderer,BaseObject &backGroundIntro);
-void showIntro(SDL_Renderer* renderer,BaseObject backGroundIntro);
-int chooseOption(SDL_Renderer* renderer,BaseObject &backGroundIntro);
+void loadIntro(SDL_Renderer* renderer,BaseObject &backGroundIntro,  vector<SDL_Texture*> &text);
+void showIntro(SDL_Renderer* renderer,BaseObject backGroundIntro, const vector<SDL_Texture*> &text);
+void showChoice(SDL_Renderer* renderer,BaseObject backGroundIntro, const vector<SDL_Texture*> &text,int k);
+int chooseOption(SDL_Renderer* renderer,BaseObject &backGroundIntro, const vector<SDL_Texture*> &text);
 
-
-void renderOption(SDL_Renderer* renderer);
 
 
 

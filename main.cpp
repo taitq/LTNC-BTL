@@ -24,12 +24,14 @@ int main(int argc, char* argv[])
 
     BaseObject backGroundIntro;
     backGroundIntro.setRect(0,0);
-    loadIntroBackGround(renderer,backGroundIntro);
-    int a = chooseOption(renderer,backGroundIntro);
-    if(a== 0 )
+    vector<SDL_Texture*> text(NUMBER_OPTION, nullptr);
+    loadIntro(renderer,backGroundIntro,text);
+    int a = chooseOption(renderer,backGroundIntro,text);
+    if(a == 0 )
     {
         showFrame(renderer,backGround, plane,cannon);
         test(renderer,backGround,plane,cannon);
     }
+
     return 0;
 }
