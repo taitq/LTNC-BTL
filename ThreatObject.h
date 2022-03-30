@@ -7,7 +7,10 @@
 #include "BaseObject.h"
 
 class ThreatObject : public BaseObject{
+private:
+    int velocity;
 public:
+    void setVelocity(int v);
     void move();
 };
 

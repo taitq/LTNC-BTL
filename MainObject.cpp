@@ -12,13 +12,17 @@ void MainObject::HandleInput(SDL_Event event) {
         {
             switch (event.key.keysym.sym) {
                 case SDLK_RIGHT:
-                    rect.x += 5;
+                    rect.x += velocity;
                     break;
                 case SDLK_LEFT:
-                    rect.x -= 5;
+                    rect.x -= velocity;
                     break;
             }
             break;
         }
     }
+}
+
+void MainObject::setVelocity(int v) {
+    velocity = v;
 }

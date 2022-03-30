@@ -6,7 +6,11 @@
 
 void ThreatObject::move() {
     if(rect.x < 1000)
-        rect.x+= 1;
+        rect.x+= velocity;
     if(rect.x >= 1000)
         rect.x = 0;
+}
+
+void ThreatObject::setVelocity(int v) {
+velocity = v;
 }

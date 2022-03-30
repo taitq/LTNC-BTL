@@ -9,7 +9,10 @@
 #include "BaseFunction.h"
 
 class MainObject : public BaseObject {
+private:
+    int velocity;
 public:
+    void setVelocity(int v);
     void HandleInput(SDL_Event event);
 };
 

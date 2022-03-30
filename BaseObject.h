@@ -12,7 +12,6 @@ public:
     SDL_Rect rect;
     SDL_Texture* pObject;
     SDL_Texture* fullObject;
-public:
     BaseObject();
     void setRect(int x, int y);
     bool loadObject(std::string path,SDL_Renderer* renderer);
