@@ -11,7 +11,7 @@
 #include "MainObject.h"
 
 void InitGame(SDL_Window* window, SDL_Renderer* &renderer);
-void loadFrame(SDL_Renderer* renderer,BaseObject &backGround, ThreatObject &plane, MainObject &cannon);
-void showFrame(SDL_Renderer* renderer, BaseObject backGround,ThreatObject plane, MainObject cannon);
-void test(SDL_Renderer* renderer, BaseObject backGround, ThreatObject plane, MainObject cannon);
+void loadFrame(SDL_Renderer* renderer,BaseObject &backGround, ThreatObject &plane, MainObject &cannon,ThreatObject &planeKilled);
+void showFrame(SDL_Renderer* renderer, BaseObject backGround,ThreatObject plane, MainObject cannon, ThreatObject planeKilled);
+void test(SDL_Renderer* renderer, BaseObject backGround, ThreatObject plane, MainObject cannon, ThreatObject planeKilled);
 #endif //MAINFUNCTION_H

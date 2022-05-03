@@ -13,15 +13,15 @@ int main(int argc, char* argv[])
 
     BaseObject backGround;
     MainObject cannon;
-    ThreatObject plane;
+    ThreatObject plane,planeKilled;
     backGround.setRect(0,0);
-    cannon.setRect(200,300);
+    cannon.setRect(300,500);
     plane.setRect(200,200);
-    cannon.setVelocity(2);
-    plane.setVelocity(1);
-    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",0);
-    loadFrame(renderer,backGround, plane,cannon);
-
+    cannon.setVelocity(10);
+    plane.setVelocity(10);
+    planeKilled.setVelocity(10);
+    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",-1);
+    loadFrame(renderer,backGround, plane,cannon,planeKilled);
     BaseObject backGroundIntro;
     backGroundIntro.setRect(0,0);
     vector<SDL_Texture*> text(NUMBER_OPTION, nullptr);
@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
     int a = chooseOption(renderer,backGroundIntro,text);
     if(a == 0 )
     {
-        showFrame(renderer,backGround, plane,cannon);
-        test(renderer,backGround,plane,cannon);
+        showFrame(renderer,backGround, plane,cannon,planeKilled);
+        test(renderer,backGround,plane,cannon,planeKilled);
     }
 
     return 0;

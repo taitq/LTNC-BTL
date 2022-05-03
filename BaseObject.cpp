@@ -7,8 +7,6 @@
 BaseObject::BaseObject() {
     rect.x = 0;
     rect.y = 0;
-   /* rect.w = WIDTH;
-    rect.h = HEIGHT;*/
     pObject = nullptr;
     fullObject= nullptr;
 }
