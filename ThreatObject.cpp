@@ -4,13 +4,28 @@
 
 #include "ThreatObject.h"
 
-void ThreatObject::move() {
-    if(rect.x < 1000)
-        rect.x+= velocity;
-    if(rect.x >= 1000)
-        rect.x = 0;
+ThreatObject::ThreatObject() {
+    isMove = true;
+    rect.x = rand() % 100;
+    rect.y = rand() % (HEIGHT/2);
+    velocity = rand()%5 + 8;
 }
 
-void ThreatObject::setVelocity(int v) {
-velocity = v;
+void ThreatObject::move() {
+    if(rect.x < WIDTH - rect.w)
+        rect.x+= velocity;
+    if(rect.x >= WIDTH - rect.h)
+    {
+        rect.x = rand() % 500;
+        rect.y = rand() % (HEIGHT/2);
+        velocity = rand() % 5 + 8;
+    }
 }
+
+void ThreatObject::showMove(SDL_Renderer* renderer) {
+    SDL_RenderCopy(renderer,fullObject, nullptr,&rect);
+   // SDL_RenderPresent(renderer);
+}
+
+
+

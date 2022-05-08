@@ -26,6 +26,7 @@ bool BaseObject::loadObject(std::string path, SDL_Renderer *renderer) {
 
 void BaseObject::showObject(SDL_Renderer* renderer) {
     SDL_BaseFunction::applySurface(renderer,fullObject,rect.x,rect.y,rect.w,rect.h);
-
 }
+
+
 

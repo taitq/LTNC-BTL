@@ -12,7 +12,7 @@ MainObject::MainObject() {
     velocity = 10;
     flip = SDL_FLIP_NONE;
 }
-void MainObject::HandleInput(SDL_Event event,SDL_Renderer* renderer) {
+void MainObject::HandleInput(SDL_Event event) {
     switch (event.type) {
         case SDL_QUIT:
             exit(0);
@@ -26,10 +26,10 @@ void MainObject::HandleInput(SDL_Event event,SDL_Renderer* renderer) {
                     rect.x -= velocity;
                     break;
                 case SDLK_UP:
-                    angle+= 2;
+                    angle-= 5;
                     break;
                 case SDLK_DOWN:
-                    angle -= 1;
+                    angle += 5;
                     break;
                 case SDLK_SPACE:
                 {
@@ -43,11 +43,7 @@ void MainObject::HandleInput(SDL_Event event,SDL_Renderer* renderer) {
     }
 }
 
-void MainObject::setVelocity(int v) {
-    velocity = v;
-}
-
-void MainObject::turn(SDL_Renderer *renderer) {
+void MainObject::rotate(SDL_Renderer *renderer) {
     SDL_RenderCopyEx(renderer,fullObject, nullptr,&rect,angle,NULL,flip);
 }
 

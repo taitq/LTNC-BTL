@@ -10,16 +10,14 @@
 #include "Bullet.h"
 
 class MainObject : public BaseObject {
-private:
+public:
     int velocity;
     double angle;
     SDL_RendererFlip flip;
-public:
     MainObject();
     Bullet bullet;
-    void setVelocity(int v);
-    void HandleInput(SDL_Event event,SDL_Renderer* renderer);
-    void turn(SDL_Renderer* renderer);
+    void HandleInput(SDL_Event event);
+    void rotate(SDL_Renderer* renderer);
 };
 
 

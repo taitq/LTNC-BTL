@@ -7,11 +7,13 @@
 #include "BaseObject.h"
 
 class ThreatObject : public BaseObject{
-private:
-    int velocity;
 public:
-    void setVelocity(int v);
-    void move();
+        ThreatObject();
+        void move();
+        void showMove(SDL_Renderer* renderer);
+        int velocity;
+        bool isMove ;
+
 };
 
 
