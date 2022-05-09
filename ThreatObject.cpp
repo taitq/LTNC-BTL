@@ -6,7 +6,7 @@
 
 ThreatObject::ThreatObject() {
     isMove = true;
-    rect.x = rand() % 100;
+    rect.x = 0;
     rect.y = rand() % (HEIGHT/2);
     velocity = rand()%5 + 8;
 }
@@ -16,7 +16,7 @@ void ThreatObject::move() {
         rect.x+= velocity;
     if(rect.x >= WIDTH - rect.h)
     {
-        rect.x = rand() % 500;
+        rect.x = 0;
         rect.y = rand() % (HEIGHT/2);
         velocity = rand() % 5 + 8;
     }

@@ -13,6 +13,8 @@ const int DELAYTIME = 1000.0f/FPS;
 SDL_Texture* SDL_BaseFunction::loadImage(std::string path, SDL_Renderer *renderer) {
    SDL_Surface* surface = IMG_Load(path.c_str());
    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer,surface);
+   if(texture == nullptr)
+       std::cout<<" error load image from  "<< path<<std::endl;
    SDL_FreeSurface(surface);
    return texture;
 }

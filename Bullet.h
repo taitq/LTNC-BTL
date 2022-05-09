@@ -10,6 +10,7 @@
 class Bullet :public BaseObject{
 public:
     int velocity;
+    int angle;
     Bullet();
     bool isMove;
     void move();

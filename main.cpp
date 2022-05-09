@@ -31,17 +31,25 @@ int main(int argc, char* argv[])
         InitGame(renderer,bgGame,rocket); // khoi tao man hinh game va ten lua sam2
         SDL_Event event;
 
-        while( event.type != SDL_QUIT)
+        while( event.type != SDL_QUIT  )
         {
             SDL_PollEvent(&event);
             bgGame.showObject(renderer);
             showPlaneList(renderer,planeList);
-            rocket.HandleInput(event);
-            rocket.rotate(renderer);
+            for(int i = 0; i < rocket.bulletList.size();i++)
+            {
+                if(rocket.bulletList[i]->isMove)
+                {
+                    rocket.bulletList[i]->move();
+                    SDL_RenderCopyEx(renderer,rocket.bulletList[i]->fullObject, nullptr,&rocket.bulletList[i]->rect,rocket.bulletList[i]->angle,NULL,SDL_FLIP_NONE);
+                }
+            }
 
             for(int  i = 0; i < planeList.size();i++)
                 planeList[i]->move();
 
+            rocket.HandleInput(event, renderer);
+            rocket.rotate(renderer);
             SDL_RenderPresent(renderer);
             SDL_Delay(DELAYTIME);
             SDL_RenderClear(renderer);

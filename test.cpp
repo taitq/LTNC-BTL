@@ -1,16 +1,8 @@
-//
-// Created by taitq on 14/03/2022.
-//
-
-#include "BaseFunction.h"
-#include "BaseObject.h"
+#include <bits/stdc++.h>
 
 using namespace std;
-int main(int argc, char* argv[])
+int main()
 {
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    window = SDL_CreateWindow(TITLE.c_str(),SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WIDTH,HEIGHT,SDL_WINDOW_SHOWN);
-    renderer = SDL_CreateRenderer(window,1,0);
-
+    double x = 36;
+    cout<<tan(x*3.14/180);
 }

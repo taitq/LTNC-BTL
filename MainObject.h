@@ -12,12 +12,13 @@
 class MainObject : public BaseObject {
 public:
     int velocity;
-    double angle;
+    double angleRotate;
+    std::vector<Bullet*> bulletList;
     SDL_RendererFlip flip;
     MainObject();
-    Bullet bullet;
-    void HandleInput(SDL_Event event);
+    void HandleInput(SDL_Event event,SDL_Renderer* renderer);
     void rotate(SDL_Renderer* renderer);
+
 };
 
 
