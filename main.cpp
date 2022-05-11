@@ -10,11 +10,13 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     srand(time(0));
+    vector<EnemyBullet*> enemyBulletList;
+    int score = 0;
     SDL_Window* window;
     SDL_Renderer* renderer;
     BaseObject bgGame;
     InitWindow(window,renderer); // khoi tao cua so game
-    BaseObject backGroundIntro;  // khoi tao background intro
+    BaseObject backGroundIntro;  // khai bao background intro
     backGroundIntro.setRect(0,0);
     MainObject rocket;
     // cac lua chon trong game
@@ -36,6 +38,8 @@ int main(int argc, char* argv[])
             SDL_PollEvent(&event);
             bgGame.showObject(renderer);
             showPlaneList(renderer,planeList);
+            if(planeList.size() < NUMBERPLANE)
+                InitPlaneList(renderer,planeList);
             for(int i = 0; i < rocket.bulletList.size();i++)
             {
                 if(rocket.bulletList[i]->isMove)
@@ -44,11 +48,20 @@ int main(int argc, char* argv[])
                     SDL_RenderCopyEx(renderer,rocket.bulletList[i]->fullObject, nullptr,&rocket.bulletList[i]->rect,rocket.bulletList[i]->angle,NULL,SDL_FLIP_NONE);
                 }
             }
-
-            for(int  i = 0; i < planeList.size();i++)
-                planeList[i]->move();
+            for(int  i = 0; i < planeList.size();i++) {
+                planeList[i]->move(renderer);
+                planeList[i]->attack(renderer,enemyBulletList);
+            }
+            for(int i = 0; i < enemyBulletList.size();i++)
+            {
+                enemyBulletList[i]->move();
+                enemyBulletList[i]->showObject(renderer);
+            }
 
             rocket.HandleInput(event, renderer);
+            if(!rocket.bulletList.empty())
+                rocket.killEnemy(planeList, renderer,score);
+            drawScore(renderer,score);
             rocket.rotate(renderer);
             SDL_RenderPresent(renderer);
             SDL_Delay(DELAYTIME);

@@ -13,7 +13,7 @@ public:
     int angle;
     Bullet();
     bool isMove;
-    void move();
+    virtual void move();
 };
 
 

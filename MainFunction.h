@@ -13,10 +13,8 @@
 
 void InitWindow(SDL_Window* window, SDL_Renderer* &renderer);
 void InitGame(SDL_Renderer* renderer, BaseObject &bgGame, MainObject &rocket);
-//void loadFrame(SDL_Renderer* renderer,BaseObject &backGround, ThreatObject &plane, MainObject &cannon,ThreatObject &planeKilled);
-//void showFrame(SDL_Renderer* renderer, BaseObject backGround,ThreatObject plane, MainObject cannon, ThreatObject planeKilled);
-void test(SDL_Renderer* renderer, BaseObject backGround, ThreatObject plane, MainObject cannon, ThreatObject planeKilled);
 void InitPlaneList(SDL_Renderer* renderer,std::vector<ThreatObject*> &planeList);
 void showPlaneList(SDL_Renderer* renderer,std::vector<ThreatObject*> planeList);
+void drawScore(SDL_Renderer * renderer, int score);
 
 #endif //MAINFUNCTION_H
