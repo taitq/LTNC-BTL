@@ -100,4 +100,5 @@ int chooseOption(SDL_Renderer* renderer, BaseObject &backGroundIntro, const vect
         }
 
     }
+    return 4;
 }

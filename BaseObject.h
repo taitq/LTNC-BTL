@@ -13,7 +13,6 @@ public:
     SDL_Texture* pObject;
     SDL_Texture* fullObject;
     BaseObject();
-    void setRect(int x, int y);
     bool loadObject(std::string path,SDL_Renderer* renderer);
     void showObject(SDL_Renderer * renderer) ;
 };

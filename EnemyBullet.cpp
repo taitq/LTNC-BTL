@@ -9,7 +9,7 @@ void EnemyBullet::move() {
     {
         rect.y += velocity;
     }
-    if(rect.y >= HEIGHT)
+    if(rect.y >= HEIGHT - 2*rect.h)
         isMove = false;
 }
 
@@ -18,6 +18,6 @@ EnemyBullet::EnemyBullet() {
     rect.y = 0;
     fullObject = nullptr;
     isMove = false;
-    velocity = 10;
+    velocity = 7;
     angle = 0;
 }

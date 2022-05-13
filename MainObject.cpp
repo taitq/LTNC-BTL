@@ -7,10 +7,10 @@
 MainObject::MainObject() {
     rect.x = 0;
     rect.y = 0;
-    NUMBERBULLET = 5;
+    NUMBERBULLET = 4;
     fullObject = nullptr;
     angleRotate = 0;
-    velocity = 20;
+    velocity = 30;
     flip = SDL_FLIP_NONE;
 }
 void MainObject::HandleInput(SDL_Event event, SDL_Renderer* renderer) {

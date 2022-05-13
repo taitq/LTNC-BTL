@@ -42,3 +42,4 @@ void ThreatObject::move(SDL_Renderer* renderer) {
 
 
 
+
