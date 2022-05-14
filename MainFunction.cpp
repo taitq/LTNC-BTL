@@ -12,6 +12,7 @@ void InitWindow(SDL_Window* window, SDL_Renderer* &renderer)
     Mix_OpenAudio(3300,MIX_DEFAULT_FORMAT,2,2048);
     TTF_Init();
 }
+
 void InitGame(SDL_Renderer* renderer, BaseObject &bgGame, MainObject &rocket)
 {
     bgGame.loadObject("ImageSource/bg.jpg",renderer);
@@ -28,6 +29,7 @@ void InitPlaneList(SDL_Renderer * renderer, std::vector<ThreatObject*> &planeLis
   newPlane->loadObject("ImageSource/B52.png",renderer);
   planeList.push_back(newPlane);
 }
+
 void showPlaneList(SDL_Renderer* renderer,std::vector<ThreatObject*> planeList)
 {
     for(int i = 0; i < planeList.size();i++)
@@ -48,29 +50,99 @@ void drawScore(SDL_Renderer * renderer, int score)
 
 bool GameOver(SDL_Renderer* renderer)
 {
-    BaseObject picture;
-    picture.loadObject("ImageSource/picture.jpg",renderer);
-    picture.rect.x = 400;
-    picture.rect.y = 150;
-    picture.showObject(renderer);
+    BaseObject Defeat;
+    BaseObject bgGame;
+    bgGame.loadObject("ImageSource/bg.jpg",renderer);
+    bgGame.rect.w = WIDTH;
+    bgGame.rect.h = HEIGHT;
+    Defeat.loadObject("ImageSource/Defeat.jpg",renderer);
+    Defeat.rect.x = 450;
+    Defeat.rect.y = 150;
+    Defeat.showObject(renderer);
+    std::vector<SDL_Rect> rect(2);
+    rect[0].x = 650;
+    rect[0].y = 250;
+    rect[0].w = 200;
+    rect[0].h = 100;
+    rect[1].x = 650;
+    rect[1].y = 350;
+    rect[1].w = 200;
+    rect[1].h= 100;
+    std::vector<SDL_Texture*> text(2);
+    text[0] = SDL_BaseFunction::loadText(renderer,"PLAY AGAIN",rect[0], BLACK);
+    text[1] = SDL_BaseFunction::loadText(renderer,"EXIT", rect[1], BLACK);
+    for(int i = 0; i < text.size();i++)
+        SDL_RenderCopy(renderer,text[i], nullptr,&rect[i]);
     SDL_RenderPresent(renderer);
-
-    SDL_Delay(1000);
+    SDL_Event event;
+    SDL_Point mouse;
+    while (event.type != SDL_QUIT)
+    {
+        SDL_PollEvent(&event);
+        switch (event.type ) {
+            case SDL_MOUSEMOTION:
+                mouse.x = event.motion.x;
+                mouse.y = event.motion.y;
+                if(SDL_PointInRect(&mouse,&rect[0])) {
+                    bgGame.showObject(renderer);
+                    Defeat.showObject(renderer);
+                    SDL_SetRenderDrawColor(renderer,125,125,125,255);
+                    SDL_RenderFillRect(renderer,&rect[0]);
+                    SDL_RenderCopy(renderer,text[0], nullptr,&rect[0]);
+                    SDL_RenderCopy(renderer,text[1], nullptr,&rect[1]);
+                }
+                else if(SDL_PointInRect(&mouse,&rect[1])) {
+                    bgGame.showObject(renderer);
+                    Defeat.showObject(renderer);
+                    SDL_SetRenderDrawColor(renderer,125,125,125,255);
+                    SDL_RenderFillRect(renderer,&rect[1]);
+                    SDL_RenderCopy(renderer,text[1], nullptr,&rect[1]);
+                    SDL_RenderCopy(renderer,text[0], nullptr,&rect[0]);
+                }
+                else
+                {
+                  bgGame.showObject(renderer);
+                  Defeat.showObject(renderer);
+                  for(int i = 0; i < text.size();i++)
+                        SDL_RenderCopy(renderer,text[i], nullptr,&rect[i]);
+                }
+                SDL_RenderPresent(renderer);
+                SDL_RenderClear(renderer);
+                break;
+            case  SDL_MOUSEBUTTONDOWN:
+                mouse.x = event.motion.x;
+                mouse.y = event.motion.y;
+                for(int i = 0 ; i < 2;i++)
+                {
+                    if(SDL_PointInRect(&mouse,&rect[i]))
+                        return i;
+                }
+                break;
+        }
+    }
 
 }
-
-bool level1 (SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std::vector<EnemyBullet*> &enemyBulletList, const int NUMBERPLANE, int &score, bool &gameOver)
+void IntroLevel(SDL_Renderer* renderer, const std::string& pathToBackgroundIntroLevel)
 {
-    BaseObject IntroBackGroundLevel1;
-
-    IntroBackGroundLevel1.loadObject("ImageSource/IntroLevel1.png",renderer);
-
-    IntroBackGroundLevel1.rect.h = HEIGHT;
-    IntroBackGroundLevel1.rect.w = WIDTH;
-
-    IntroBackGroundLevel1.showObject(renderer);
+    BaseObject IntroLevel;
+    IntroLevel.loadObject(pathToBackgroundIntroLevel,renderer);
+    IntroLevel.rect.h = HEIGHT;
+    IntroLevel.rect.w = WIDTH;
+    IntroLevel.showObject(renderer);
     SDL_RenderPresent(renderer);
-    SDL_Delay(1000);
+    SDL_Event event;
+    while (event.type != SDL_QUIT && event.key.keysym.sym != SDLK_SPACE )
+    {
+        SDL_PollEvent(&event);
+        SDL_Delay(10);
+    }
+    SDL_RenderClear(renderer);
+    if(event.type == SDL_QUIT)
+        exit(0);
+}
+
+void LogicGame(SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std::vector<EnemyBullet*> &enemyBulletList, int NUMBERPLANE,int &score, bool &gameOver)
+{
     std::vector<ThreatObject*> planeList;
     for(int i = 0; i < NUMBERPLANE; i++)
         InitPlaneList(renderer,planeList);
@@ -110,15 +182,10 @@ bool level1 (SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std
                 SDL_RenderPresent(renderer);
                 SDL_Delay(1000);
                 gameOver = true;
-                break;
+                GameOver(renderer);
+                return;
             }
             enemyBulletList[i]->showObject(renderer);
-        }
-        if(gameOver) {
-            GameOver(renderer);
-            SDL_RenderPresent(renderer);
-            SDL_Delay(500);
-            exit(0);
         }
         rocket.HandleInput(event, renderer);
         if(!rocket.bulletList.empty())
@@ -127,9 +194,13 @@ bool level1 (SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std
         rocket.rotate(renderer);
         SDL_RenderPresent(renderer);
         SDL_Delay(DELAYTIME);
-
         SDL_RenderClear(renderer);
-
     }
+}
+bool level1 (SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std::vector<EnemyBullet*> &enemyBulletList, const int NUMBERPLANE, int &score, bool &gameOver)
+{
+    IntroLevel(renderer,"ImageSource/IntroLevel1.png");
+    LogicGame(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,gameOver);
+    return gameOver;
 
 }

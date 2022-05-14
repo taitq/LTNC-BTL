@@ -8,5 +8,5 @@
 
 static SDL_Color RED = {255,0,0,255};
 static SDL_Color GRAY = {125,125,125,255};
-
+static  SDL_Color BLACK = {0,0,0,255};
 #endif //CANNON_CPP_COLOR_H
