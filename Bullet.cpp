@@ -9,7 +9,7 @@ Bullet::Bullet() {
     rect.y = 0;
     fullObject = nullptr;
     isMove = false;
-    velocity = 20;
+    velocity = 10;
     angle = 0;
 }
 

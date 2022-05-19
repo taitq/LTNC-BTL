@@ -28,20 +28,20 @@ void SDL_BaseFunction::applySurface(SDL_Renderer *renderer, SDL_Texture *srcText
     SDL_RenderCopy(renderer, srcTexture, NULL, &drect);
 }
 
-void SDL_BaseFunction::playAudio(const std::string& audioSource,int n)
+void SDL_BaseFunction::playAudio(const std::string& audioSource,int loop)
 {
     Mix_Chunk * chunk = nullptr;
     chunk = Mix_LoadWAV(audioSource.c_str());
     if(chunk == nullptr)
         std::cout<<Mix_GetError()<<"Can't load file "<< audioSource<<std::endl;
     else
-        Mix_PlayChannel(-1,chunk,n);
+        Mix_PlayChannel(-1,chunk,loop);
 }
 
 SDL_Texture* SDL_BaseFunction::loadText(SDL_Renderer *renderer, std::string text, SDL_Rect rect, SDL_Color color)
 {
     TTF_Font* font = nullptr;
-    font = TTF_OpenFont("FontSource/VeraMoBd.ttf", 100);
+    font = TTF_OpenFont("FontSource/Starcraft Normal.ttf", 100);
     if(font == nullptr)
         std::cout<<TTF_GetError()<<std::endl;
     SDL_Surface * surface = TTF_RenderText_Solid(font,text.c_str(),color);

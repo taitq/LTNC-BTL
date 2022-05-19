@@ -17,7 +17,7 @@ public:
     std::vector<Bullet*> bulletList;
     SDL_RendererFlip flip;
     MainObject();
-    void HandleInput(SDL_Event event,SDL_Renderer* renderer);
+    void HandleInput(SDL_Event event,SDL_Renderer* renderer, SDL_Rect ProhibitZone);
     void rotate(SDL_Renderer* renderer);
     void killEnemy( std::vector<ThreatObject* >& planeList, SDL_Renderer* renderer, int& score);
 

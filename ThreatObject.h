@@ -12,7 +12,6 @@ public:
         void move(SDL_Renderer* renderer);
         void attack(SDL_Renderer* renderer, std::vector<EnemyBullet*> &enemyBulletList);
         int velocity;
-        int numberBullet;
         bool isMove ;
 };
 

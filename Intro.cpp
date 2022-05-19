@@ -4,7 +4,7 @@
 
 #include "Intro.h"
 
-const int NUMBER_OPTION = 3;
+const int NUMBER_OPTION = 2;
 
 vector<SDL_Rect> setRectOption()
 {
@@ -15,7 +15,7 @@ vector<SDL_Rect> setRectOption()
     option[0].w = 300;
     for(int i = 1 ; i < NUMBER_OPTION;i++) {
         option[i].x = 500;
-        option[i].y = option[i-1].y + 101;
+        option[i].y = option[i-1].y +101;
         option[i].w = 300;
         option[i].h = 100;
     }
@@ -28,9 +28,8 @@ void loadIntro(SDL_Renderer* renderer,BaseObject &backGroundIntro,  vector<SDL_T
     backGroundIntro.loadObject("ImageSource/lobby.jpg",renderer);
     backGroundIntro.rect.w = WIDTH;
     backGroundIntro.rect.h = HEIGHT;
-    text[0] = SDL_BaseFunction::loadText(renderer,"PLAY ",option[0],RED);
-    text[1] = SDL_BaseFunction::loadText(renderer,"HISTORY " ,option[1], RED );
-    text[2] = SDL_BaseFunction::loadText(renderer, "EXIT ", option[2],RED);
+    text[0] = SDL_BaseFunction::loadText(renderer,"PLAY ",option[0],PURPLE);
+    text[1] = SDL_BaseFunction::loadText(renderer, "EXIT ", option[2],PURPLE);
 
 }
 void showIntro(SDL_Renderer* renderer,BaseObject backGroundIntro, const vector<SDL_Texture*> &text)
@@ -56,7 +55,6 @@ int chooseOption(SDL_Renderer* renderer, BaseObject &backGroundIntro, const vect
 {
     showIntro(renderer,backGroundIntro,text);
     SDL_RenderPresent(renderer);
-    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",0);
     SDL_Point mouse;
     SDL_Event event;
     std::vector<SDL_Rect > option (NUMBER_OPTION);

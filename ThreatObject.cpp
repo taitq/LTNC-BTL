@@ -9,7 +9,6 @@ ThreatObject::ThreatObject() {
     rect.x = 0;
     rect.y = rand() % (HEIGHT/3);
     velocity = rand()%5 + 8;
-    numberBullet = 3;
 }
 
 void ThreatObject::move(SDL_Renderer* renderer) {

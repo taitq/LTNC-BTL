@@ -14,25 +14,34 @@ int main(int argc, char* argv[])
     int score = 0;
     SDL_Window* window;
     SDL_Renderer* renderer;
-    InitWindow(window,renderer); // khoi tao cua so game
-
+    InitWindow(window,renderer);
     BaseObject backGroundIntro;
     vector<SDL_Texture*> text(NUMBER_OPTION, nullptr);
     loadIntro(renderer,backGroundIntro,text);
-
-    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",-1); // nhac nen
-
+    SDL_BaseFunction::playAudio("AudioSource/backGroundSound.mp3",-1);
     int option = chooseOption(renderer,backGroundIntro,text);
-
-    // cac lua chon trong game
-
 
     if(option == 0)
     {
         SDL_RenderClear(renderer);
         BaseObject bgGame;
         MainObject rocket;
-        level1(renderer,bgGame,rocket,enemyBulletList,3,score, gameOver);
+        bool passLevel1 = level1(renderer,bgGame,rocket,enemyBulletList,3,score,gameOver);
+        if(passLevel1)
+        {
+            bool passLevel2 = level2(renderer,bgGame,rocket,enemyBulletList,7,score,gameOver);
+            if(passLevel2)
+            {
+                SDL_RenderClear(renderer);
+                bool passLevel3 = level3(renderer,bgGame,rocket,enemyBulletList,4,score,gameOver);
+                if(passLevel3) {
+                    bool passLevel4 = level4(renderer, bgGame, rocket, enemyBulletList, 4, score, gameOver);
+                    if (passLevel4)
+                        vitory(renderer);
+                }
+            }
+        }
     }
+
     return 0;
 }

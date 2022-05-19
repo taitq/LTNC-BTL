@@ -7,14 +7,13 @@
 MainObject::MainObject() {
     rect.x = 0;
     rect.y = 0;
-    NUMBERBULLET = 4;
+    NUMBERBULLET = 3;
     fullObject = nullptr;
     angleRotate = 0;
     velocity = 30;
     flip = SDL_FLIP_NONE;
 }
-void MainObject::HandleInput(SDL_Event event, SDL_Renderer* renderer) {
-    //SDL_PollEvent(&event);
+void MainObject::HandleInput(SDL_Event event, SDL_Renderer* renderer, SDL_Rect ProhibitZone) {
         switch (event.type) {
             case SDL_QUIT:
                 exit(0);
@@ -22,24 +21,25 @@ void MainObject::HandleInput(SDL_Event event, SDL_Renderer* renderer) {
             {
                 switch (event.key.keysym.sym) {
                     case SDLK_RIGHT: {
-                        if(rect.x < WIDTH - rect.w)
+                        if(rect.x < WIDTH - rect.w && rect.x < WIDTH - ProhibitZone.w -100)
                             rect.x += velocity;
                     }
                         break;
                     case SDLK_LEFT:
-                       if(rect.x > velocity)
+                       if(rect.x > velocity  && rect.x )
                            rect.x -= velocity;
                         break;
                     case SDLK_UP:
                         if(angleRotate >= -60)
-                            angleRotate -= 5;
+                            angleRotate -= 10;
                         break;
                     case SDLK_DOWN:
                         if(angleRotate <= 60)
-                            angleRotate += 5;
+                            angleRotate += 10;
                         break;
                     case SDLK_SPACE:
                     {
+                        SDL_BaseFunction::playAudio("AudioSource/myPlaneShotEnemy.mp3",0);
                         Bullet* newBullet = new Bullet();
                         newBullet->loadObject("ImageSource/bullet1.png",renderer);
                         newBullet->isMove = true;
