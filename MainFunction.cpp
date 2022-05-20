@@ -26,13 +26,15 @@ void InitGame(SDL_Renderer* renderer, BaseObject &bgGame, MainObject &rocket)
 void InitPlaneList(SDL_Renderer * renderer, std::vector<ThreatObject*> &planeList)
 {
   ThreatObject* newPlane = new ThreatObject();
-  int type = rand()%3;
+  int type = rand()%4;
   if(type == 1)
     newPlane->loadObject("ImageSource/B52_1.png",renderer);
   if(type == 2)
       newPlane->loadObject("ImageSource/B52_2.png",renderer);
   if(type == 0)
       newPlane->loadObject("ImageSource/B52_0.png",renderer);
+  if(type == 3)
+      newPlane->loadObject("ImageSource/B52_3.png",renderer);
   planeList.push_back(newPlane);
 }
 
@@ -366,7 +368,7 @@ void LogicGame2(SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket, s
 bool level1 (SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std::vector<EnemyBullet*> &enemyBulletList, const int NUMBERPLANE, int &score, bool &gameOver)
 {
     IntroLevel(renderer,"ImageSource/IntroLevel1.jpg");
-    int target = 2;
+    int target = 30;
     LogicGame(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,target,gameOver);
     if(score >= target)
     {
@@ -393,6 +395,7 @@ bool level2( SDL_Renderer* renderer, BaseObject bgGame, MainObject &rocket,  std
     LogicGame(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,target,gameOver);
     if(score >= target)
     {
+        win(renderer);
         reset(rocket,enemyBulletList,score,gameOver);
         return true;
     }
@@ -422,18 +425,20 @@ bool level3(SDL_Renderer* renderer, BaseObject bgGame, MainObject& rocket, std::
     LogicGame2(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,target,gameOver,PathToImage);
     if(!gameOver)
     {
+        win(renderer);
         SDL_Delay(1000);
         reset(rocket,enemyBulletList,score,gameOver);
         return true;
     }
     int chooseOption = GameOver(renderer);
     if(gameOver) {
-        if(chooseOption == 0)  // lua chon PLAY AGAIN
+        if(chooseOption == 0)
         {
             reset(rocket,enemyBulletList,score,gameOver);
-            level3(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,gameOver);
+            bool pass = level3(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,gameOver);
+            return pass;
         }
-        else if(chooseOption == 1) // lua chon EXIT
+        else if(chooseOption == 1)
         {
             exit(0);
         }
@@ -443,7 +448,7 @@ bool level3(SDL_Renderer* renderer, BaseObject bgGame, MainObject& rocket, std::
 bool level4(SDL_Renderer* renderer, BaseObject bgGame , MainObject& rocket, std::vector<EnemyBullet*> &enemyBulletList, int NUMBERPLANE, int &score,  bool &gameOver)
 {
     IntroLevel(renderer,"ImageSource/IntroLevel4.jpg");
-    int target = 10;
+    int target = 50;
     std::vector<std::string> PathToImage(6);
     PathToImage[0] = "ImageSource/cotCo0.png";
     PathToImage[1] = "ImageSource/cotCo1.png";
@@ -454,9 +459,9 @@ bool level4(SDL_Renderer* renderer, BaseObject bgGame , MainObject& rocket, std:
     LogicGame2(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,target,gameOver,PathToImage);
     if(!gameOver)
     {
+        win(renderer);
         SDL_Delay(1000);
-        rocket.bulletList.clear();
-        enemyBulletList.clear();
+        reset(rocket,enemyBulletList,score,gameOver);
         score = 0;
         return true;
     }
@@ -465,7 +470,8 @@ bool level4(SDL_Renderer* renderer, BaseObject bgGame , MainObject& rocket, std:
         if(chooseOption == 0)
         {
             reset(rocket,enemyBulletList,score,gameOver);
-            level4(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,gameOver);
+            bool pass = level4(renderer,bgGame,rocket,enemyBulletList,NUMBERPLANE,score,gameOver);
+            return pass;
         }
         else if(chooseOption == 1)
         {
